@@ -4,26 +4,30 @@ import sys as _sys
 def cmsArgParse(base=argparse.ArgumentParser, **kwargs):
     # makes a derived class for the given base class; this allows starting from a user's derived ArgumentParser class with custom behavior
     class cmsArgumentParser(base):
-        # arg default handling taken from argparse
-        def _fix_args(self, args=None):
-            if args is None:
-                # args default to the system args
-                args = _sys.argv[1:]
-                sep = '--'
+        # get only args that come after separator
+        def _fix_args(self, args, sep='--'):
                 try:
                     sep_index = args.index(sep)
                 except ValueError:
-                    raise ValueError("cmsArgParse with command-line input requires arguments to come after {} separator".format(sep))
+                    raise ValueError("Arguments must come after {} separator".format(sep))
                 args = args[sep_index+1:]
+                return args
+        # arg default handling taken from argparse
+        def _handle_args(self, args=None):
+            if args is None:
+                # args default to the system args
+                args = _sys.argv[1:]
+                # check for separator by default for command-line input only
+                args = self._fix_args(args)
             else:
                 # make sure that args are mutable
                 args = list(args)
             return args
         def parse_args(self, args=None, namespace=None):
-            args = self._fix_args(args)
+            args = self._handle_args(args)
             return super(cmsArgumentParser,self).parse_args(args=args, namespace=namespace)
         def parse_known_args(self, args=None, namespace=None):
-            args = self._fix_args(args)
+            args = self._handle_args(args)
             return super(cmsArgumentParser,self).parse_known_args(args=args, namespace=namespace)
     return cmsArgumentParser(**kwargs)
 
