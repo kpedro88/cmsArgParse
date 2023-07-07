@@ -1,0 +1,41 @@
+#!/bin/bash
+
+CMS_EXE=$(basename $0| sed 's/CLI$//')
+
+usage(){
+	echo "$(basename $0) [options] config.py [arguments]"
+	exit 0
+}
+
+# display usage if no arguments provided
+if [ $# -eq 0 ]; then
+	usage
+fi
+
+# check for executable
+if ! type $CMS_EXE >& /dev/null; then
+	echo "$CMS_EXE not found"
+	exit 1
+fi
+
+# find config.py & include it in the first set of options
+FOUND_CONFIG=0
+CMS_OPTS=()
+while [ "$FOUND_CONFIG" -lt 2 ] && [ $# -ne 0 ]; do
+	if [[ "$1" != *".py" ]]; then
+		FOUND_CONFIG=1
+	elif [ "$FOUND_CONFIG" -eq 1 ]; then
+		FOUND_CONFIG=2
+	fi
+	CMS_OPTS+=("$1")
+	shift
+done
+CONFIG_OPTS=("$@")
+
+# check if config.py was actually found
+if [ $FOUND_CONFIG -eq 0 ]; then
+	echo "config.py not found in argument list"
+	exit 1
+fi
+
+$CMS_EXE ${CMS_OPTS[@]} -- ${CONFIG_OPTS[@]}
