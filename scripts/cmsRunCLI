@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 CMS_EXE=$(basename $0| sed 's/CLI$//')
 
@@ -21,11 +21,9 @@ fi
 # find config.py & include it in the first set of options
 FOUND_CONFIG=0
 CMS_OPTS=()
-while [ "$FOUND_CONFIG" -lt 2 ] && [ $# -ne 0 ]; do
-	if [[ "$1" != *".py" ]]; then
+while [ "$FOUND_CONFIG" -lt 1 ] && [ $# -ne 0 ]; do
+	if [[ "$1" == *".py" ]]; then
 		FOUND_CONFIG=1
-	elif [ "$FOUND_CONFIG" -eq 1 ]; then
-		FOUND_CONFIG=2
 	fi
 	CMS_OPTS+=("$1")
 	shift
