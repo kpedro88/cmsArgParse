@@ -1,0 +1,1 @@
+<test name="TestFWCoreArgs" command="runPythonTests.sh"/>
