@@ -49,7 +49,15 @@ if __name__=="__main__":
             args = parser.parse_args()
             expected = argparse.Namespace(test = True)
             self.assertEqual(args,expected)
-        def testNoSep(self):
+        def testSep(self):
+            orig_argv = deepcopy(_sys.argv)
+            _sys.argv = ['cmsRun','--strict','config.py','--','-t']
+            parser = cmsArgParse()
+            parser.add_argument("-t","--test",default=False,action="store_true",help="test arg")
+            args = parser.parse_args()
+            expected = argparse.Namespace(test = True)
+            self.assertEqual(args,expected)
+        def testNoConfig(self):
             orig_argv = deepcopy(_sys.argv)
             _sys.argv = ['cmsRun','--strict','config','-t']
             parser = cmsArgParse()
