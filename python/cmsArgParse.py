@@ -6,17 +6,19 @@ def cmsArgParse(base=argparse.ArgumentParser, **kwargs):
     class cmsArgumentParser(base):
         # get only args that come after the name of the configuration script (following VarParsing convention)
         def _fix_args(self, args):
-                print(args)
                 config_index = next((index for index, arg in enumerate(args) if arg.endswith('.py')), -1)
                 if config_index==-1:
                     raise RuntimeError("No configuration file found ending in .py")
+                # optionally remove '--' separator (needed for cmsRun)
+                if len(args)>config_index and args[config_index+1]=='--':
+                    config_index += 1
                 args = args[config_index+1:]
                 return args
         # arg default handling taken from argparse
         def _handle_args(self, args=None):
             if args is None:
-                # args default to the system args
-                args = _sys.argv[1:]
+                # args default to the system args, but including arg 0 (which may be the config name)
+                args = _sys.argv[:]
                 # check for config by default for command-line input only
                 args = self._fix_args(args)
             else:
