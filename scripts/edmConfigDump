@@ -18,12 +18,11 @@ parser.add_argument("--pruneVerbose", action="store_true",
                     help="With --prune, be verbose on what is pruned")
 parser.add_argument("-o", "--output", type=str, default=None,
                     help="Save the configuration dump into this file. In this case any printouts from the configuration continue to be printed to stdout. Default is to print the configuration dump to stdout.")
-parser.add_argument("--varParsing", action="store_true",
-                    help="Handle command line arguments used with VarParsing")
 
 options, extra = parser.parse_known_args()
+has_sep = '--' in sys.argv
 sys.argv = [os.path.basename(__file__),options.filename]
-if not options.varParsing: sys.argv.append("--")
+if has_sep: sys.argv.append("--")
 sys.argv.extend(extra)
 handle = open(options.filename, 'r')
 loader=SourceFileLoader("pycfg", options.filename)
