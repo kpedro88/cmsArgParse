@@ -2,7 +2,7 @@ import FWCore.ParameterSet.Config as cms
 from FWCore.Args.cmsArgParse import cmsArgParse
 import sys
 
-parser = cmsArgParse(prog=sys.argv[0], description='Test cmsArgParse')
+parser = cmsArgParse(description='Test cmsArgParse')
 parser.add_argument("--maxEvents", help="max events to process", type=int, default=1)
 # same as a cmsRun argument
 parser.add_argument("-n", "--numThreads", help="number of threads", type=int, default=1)
