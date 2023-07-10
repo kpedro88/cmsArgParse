@@ -1,3 +1,3 @@
 <test name="TestFWCoreArgs" command="runPythonTests.sh"/>
 <test name="TestFWCoreArgsRun" command="set -x; cmsRunCLI ${LOCALTOP}/src/FWCore/Args/test/test_config.py --maxEvents 2 -n 2"/>
-<test name="TestFWCoreArgsDump" command="set -x; edmConfigDump ${LOCALTOP}/src/FWCore/Args/test/test_config.py --maxEvents 2 -n 2"/>
+<test name="TestFWCoreArgsDump" command="set -x; edmConfigDump ${LOCALTOP}/src/FWCore/Args/test/test_config.py --maxEvents 2 -n 2 -o out.txt"/>
