@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 CMS_EXE=$(basename $0| sed 's/CLI$//')
 
