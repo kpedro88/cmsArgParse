@@ -20,10 +20,12 @@ fi
 
 # find config.py & include it in the first set of options
 FOUND_CONFIG=0
+CONFIG_FILE=
 CMS_OPTS=()
 while [ "$FOUND_CONFIG" -lt 1 ] && [ $# -ne 0 ]; do
 	if [[ "$1" == *".py" ]]; then
 		FOUND_CONFIG=1
+		CONFIG_FILE="$1"
 	fi
 	CMS_OPTS+=("$1")
 	shift
@@ -36,4 +38,10 @@ if [ $FOUND_CONFIG -eq 0 ]; then
 	exit 1
 fi
 
-$CMS_EXE ${CMS_OPTS[@]} -- ${CONFIG_OPTS[@]}
+# check if config.py is using VarParsing (backward compatibility)
+SEP='--'
+if grep -q "VarParsing" "$CONFIG_FILE"; then
+	SEP=
+fi
+
+$CMS_EXE ${CMS_OPTS[@]} $SEP ${CONFIG_OPTS[@]}
