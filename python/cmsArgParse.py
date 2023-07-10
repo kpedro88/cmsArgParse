@@ -9,7 +9,7 @@ def cmsArgParse(base=argparse.ArgumentParser, **kwargs):
                 try:
                     sep_index = args.index(sep)
                 except ValueError:
-                    raise ValueError("Arguments must come after {} separator".format(sep))
+                    raise ValueError("Arguments must come after {} separator".format(sep)) from None
                 args = args[sep_index+1:]
                 return args
         # arg default handling taken from argparse
