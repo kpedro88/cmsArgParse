@@ -1,4 +1,5 @@
 <test name="TestFWCoreArgs" command="runPythonTests.sh"/>
 <test name="TestFWCoreArgsRun" command="cmsRunCLI ${LOCALTOP}/src/FWCore/Args/test/test_config.py --maxEvents 2 -n 2"/>
+<test name="TestFWCoreArgsPyHelp" command="python3 ${LOCALTOP}/src/FWCore/Args/test/test_config.py --help"/>
 <test name="TestFWCoreArgsDump" command="edmConfigDumpCLI ${LOCALTOP}/src/FWCore/Args/test/test_config.py --maxEvents 2 -n 2 -o out.txt"/>
 <test name="TestFWCoreArgsDumpVP" command="edmConfigDump --varParsing ${LOCALTOP}/src/FWCore/Args/test/test_config_vp.py maxEvents=2 threads=2 output=out.txt"/>

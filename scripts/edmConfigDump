@@ -22,7 +22,7 @@ parser.add_argument("--varParsing", action="store_true",
                     help="Handle command line arguments used with VarParsing")
 
 options, extra = parser.parse_known_args()
-sys.argv = [options.filename]
+sys.argv = [os.path.basename(__file__),options.filename]
 if not options.varParsing: sys.argv.append("--")
 sys.argv.extend(extra)
 handle = open(options.filename, 'r')

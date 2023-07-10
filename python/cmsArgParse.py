@@ -17,8 +17,10 @@ def cmsArgParse(base=argparse.ArgumentParser, **kwargs):
             if args is None:
                 # args default to the system args
                 args = _sys.argv[1:]
-                # check for separator by default for command-line input only
-                args = self._fix_args(args)
+                # check for separator by default only for command-line input
+                # and only for cms executables
+                if _sys.argv[0].startswith("cms") or _sys.argv[0].startswith("edm"):
+                    args = self._fix_args(args)
             else:
                 # make sure that args are mutable
                 args = list(args)
